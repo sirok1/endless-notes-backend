@@ -1,14 +1,16 @@
 server:
-  port: 8080
+  port: ${APP_PORT}
   servlet:
-    context-path: /api/v1
+    context-path: ${API_PREFIX}
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: password
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
+  config:
+    import: file:../../../.env[.properties]
 
