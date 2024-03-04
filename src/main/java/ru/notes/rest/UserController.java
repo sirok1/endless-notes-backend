@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.notes.entity.User;
-import ru.notes.model.UserBody;
+import ru.notes.model.UserRequestBody;
 import ru.notes.service.UserService;
 
 @Tag(name = "Users", description = "Users API")
@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping(path = "user/create")
-    public ResponseEntity<User> createUser(@RequestBody UserBody request) {
+    public ResponseEntity<User> createUser(@RequestBody UserRequestBody request) {
         log.info("REQUEST > {}", request );
         return ResponseEntity.ok().body(userService.createUser(request));
     }
