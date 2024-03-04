@@ -13,6 +13,35 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-file</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <resources>
+                                <resourse>
+                                    <directory>./</directory>
+                                    <includes>
+                                        <include>.env</include>
+                                    </includes>
+                                </resourse>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,6 +77,11 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
         </dependency>
     </dependencies>
 
