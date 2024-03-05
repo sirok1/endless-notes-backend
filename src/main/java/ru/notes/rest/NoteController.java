@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.notes.entity.Note;
 import ru.notes.service.NoteService;
-import ru.notes.service.UserService;
 
 import java.util.List;
 
