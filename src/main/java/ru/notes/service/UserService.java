@@ -24,6 +24,9 @@ public class UserService {
 
     @Transactional
     public User create(User user) {
+        if (usersRepository.existsByUsername(user.getUsername())) {
+            throw new RuntimeException("User with this username already exists");
+        }
         if (usersRepository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("User with this email already exists");
         }
@@ -36,14 +39,19 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    public User getByUsername(String username) {
+        return usersRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+    }
+
     public UserDetailsService userDetailsService() {
-        return this::getByEmail;
+        return this::getByUsername;
     }
 
     public User getCurrentUser() {
-        var email = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.info("username in spring context > {}", email);
-        return getByEmail(email);
+        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return getByUsername(username);
     }
 
     @Deprecated
