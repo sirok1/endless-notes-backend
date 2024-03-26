@@ -10,8 +10,12 @@ spring:
     password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     open-in-view: off
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
 openapi:
   dev-url: http://localhost:${APP_PORT}${API_PREFIX}
@@ -24,3 +28,7 @@ springdoc:
     path: ${SWAGGER_PATH}/swagger-ui
     layout: BaseLayout
   enable-spring-security: false
+
+token:
+  signing:
+    key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855

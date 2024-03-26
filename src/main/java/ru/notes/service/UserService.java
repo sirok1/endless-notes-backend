@@ -1,59 +1,89 @@
 package ru.notes.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 import ru.notes.entity.Role;
 import ru.notes.entity.User;
-import ru.notes.repository.UsersRepository;
+import ru.notes.error.RestException;
+import ru.notes.repository.UserRepository;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private final UserRepository repository;
 
-    private final UsersRepository usersRepository;
-
+    /**
+     * Сохранение пользователя
+     *
+     * @return сохраненный пользователь
+     */
     public User save(User user) {
-        return usersRepository.save(user);
+        return repository.save(user);
     }
 
-    @Transactional
+
+    /**
+     * Создание пользователя
+     *
+     * @return созданный пользователь
+     */
     public User create(User user) {
-        if (usersRepository.existsByUsername(user.getUsername())) {
-            throw new RuntimeException("User with this username already exists");
+        if (repository.existsByUsername(user.getUsername())) {
+            // Заменить на свои исключения
+            throw new RestException(409, "Пользователь с таким именем уже существует");
+
         }
-        if (usersRepository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("User with this email already exists");
+
+        if (repository.existsByEmail(user.getEmail())) {
+            throw new RestException(409, "Пользователь с таким email уже существует");
         }
 
         return save(user);
     }
 
-    public User getByEmail(String email) {
-        return usersRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
+    /**
+     * Получение пользователя по имени пользователя
+     *
+     * @return пользователь
+     */
     public User getByUsername(String username) {
-        return usersRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
 
     }
 
+    /**
+     * Получение пользователя по имени пользователя
+     * <p>
+     * Нужен для Spring Security
+     *
+     * @return пользователь
+     */
     public UserDetailsService userDetailsService() {
         return this::getByUsername;
     }
 
+    /**
+     * Получение текущего пользователя
+     *
+     * @return текущий пользователь
+     */
     public User getCurrentUser() {
+        // Получение имени пользователя из контекста Spring Security
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
         return getByUsername(username);
     }
 
+
+    /**
+     * Выдача прав администратора текущему пользователю
+     * <p>
+     * Нужен для демонстрации
+     */
     @Deprecated
     public void getAdmin() {
         var user = getCurrentUser();

@@ -1,5 +1,6 @@
 package ru.notes.service;
 
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -42,6 +43,7 @@ public class JwtService {
         if (userDetails instanceof User customUserDetails) {
             claims.put("id", customUserDetails.getId());
             claims.put("email", customUserDetails.getEmail());
+            claims.put("role", customUserDetails.getRole());
         }
         return generateToken(claims, userDetails);
     }
