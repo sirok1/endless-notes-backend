@@ -1,4 +1,4 @@
-package ru.notes.model;
+package ru.notes.domain.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

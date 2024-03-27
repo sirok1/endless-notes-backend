@@ -1,4 +1,4 @@
-package ru.notes.error;
+package ru.notes.exception;
 
 import lombok.Getter;
 

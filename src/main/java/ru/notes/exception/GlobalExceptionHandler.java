@@ -1,11 +1,11 @@
-package ru.notes.error;
+package ru.notes.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.notes.model.ErrorResponse;
+import ru.notes.domain.model.ErrorResponse;
 
 @ControllerAdvice
 @Slf4j

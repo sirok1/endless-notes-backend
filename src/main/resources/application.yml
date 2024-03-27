@@ -17,6 +17,7 @@ spring:
       hibernate:
         format_sql: true
 
+
 openapi:
   dev-url: http://localhost:${APP_PORT}${API_PREFIX}
   prod-url: ${PROD_URL}${API_PREFIX}
@@ -29,6 +30,7 @@ springdoc:
     layout: BaseLayout
   enable-spring-security: false
 
-token:
-  signing:
-    key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
+jwt:
+  secret:
+    access: Y32yhOjyLfnIfc7JZo33fiZek2jCuFQnp8EIceN2KXo0DbyOS9YqeBiQQrmOtL59XyjdgpuVrrxaEC+ejffTQg==
+    refresh: 5Cv73gGDb2cE9ow3mWIYUUZrkfny4xwpil74YbMgQt2GSmhZiySEAQwD5L/zS+3RpP80Q5GnPu825K9dW9XXZA==
