@@ -28,7 +28,6 @@ springdoc:
   swagger-ui:
     path: ${SWAGGER_PATH}/swagger-ui
     layout: BaseLayout
-  enable-spring-security: false
 
 jwt:
   secret:

@@ -19,14 +19,14 @@ import ru.notes.service.AuthService;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/auth")
+@RequestMapping("auth")
 @RequiredArgsConstructor
 @Tag(name = "Аутентификация")
 public class AuthController {
     private final AuthService authService;
 
     @Operation(summary = "Регистрация пользователя")
-    @PostMapping("/sign-up")
+    @PostMapping("sign-up")
     public ResponseEntity<JwtAuthenticationResponse> signUp(@RequestBody @Valid SignUpRequest request) {
         final JwtAuthenticationResponse token = authService.signUp(request);
         return ResponseEntity.ok(token);

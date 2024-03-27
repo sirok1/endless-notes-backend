@@ -36,18 +36,18 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
                     corsConfiguration.setAllowedOriginPatterns(List.of("*"));
-                    corsConfiguration.setAllowedMethods(List.of("*"));
+                    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
 
                 }))
-                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/v1/auth/sign-in").permitAll()
-                        .requestMatchers("/v1/auth/sign-up").permitAll()
+                        .requestMatchers("/auth/sign-in").permitAll()
+                        .requestMatchers("/auth/sign-up").permitAll()
                         .requestMatchers(swaggerPath + "/**", swaggerSchemePath + "/swagger-resources/*", swaggerSchemePath + "/**").permitAll()
                         .anyRequest().authenticated())
+                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

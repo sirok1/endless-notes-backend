@@ -12,7 +12,7 @@ import ru.notes.service.UserService;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping("/example")
+@RequestMapping("example")
 @RequiredArgsConstructor
 @Tag(name = "Примеры", description = "Примеры запросов с разными правами доступа")
 public class ExampleController {
